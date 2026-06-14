@@ -31,11 +31,12 @@ override.tf.json
 # Local Binaries and Downloads
 /bin/
 
-# Temporary Files and Tarballs
+# Temporary Files, Tarballs, and Study Guides
 *.tar.gz
 *.zip
 *.log
 /var/log/
+exam_guide.md
 
 # Operating System Files
 .DS_Store
