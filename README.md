@@ -23,6 +23,8 @@ MetaSpace Digital Twin Operations Cloud is a centralized cloud engineering platf
 
 ## 1. System Architecture
 
+![MetaSpace AWS Cloud Architecture Diagram](docs/images/aws_architecture.png)
+
 The project is designed with a secure multi-subnet network architecture that isolates database resources while keeping web servers publicly accessible.
 
 ### Network Design
