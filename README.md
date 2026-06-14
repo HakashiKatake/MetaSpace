@@ -18,6 +18,7 @@ MetaSpace Digital Twin Operations Cloud is a centralized cloud engineering platf
 10. [AWS Cost Estimation and Analysis](#10-aws-cost-estimation-and-analysis)
 11. [Project Learnings and Takeaways](#11-project-learnings-and-takeaways)
 12. [GitHub Actions CI/CD Pipeline](#12-github-actions-cicd-pipeline)
+13. [Deployment Screenshots](#13-deployment-screenshots)
 
 ---
 
@@ -476,6 +477,40 @@ To activate the CD pipeline, configure the following secrets in your GitHub repo
 3. Create two new Repository Secrets:
    - **AWS_EC2_IP**: Set this to your EC2 public Elastic IP (e.g., `100.58.176.84`).
    - **AWS_SSH_KEY**: Copy the entire contents of your private key file (`~/.ssh/metaspace-key`) and paste it here.
+
+---
+
+## 13. Deployment Screenshots
+
+To demonstrate active deployment and verification, save your screenshot images in the `docs/images/` directory using the filenames below. Once saved, they will automatically render in the documentation.
+
+### 1. Dashboard Web Portal
+Screenshot of the main web application page showing the real-time Digital Twin KPIs and registry tables:
+![1. Dashboard Web Portal](docs/images/screenshot_dashboard.png)
+
+### 2. Analytics Telemetry Visuals
+Screenshot of the analytics page displaying the Chart.js metric trends:
+![2. Analytics Telemetry Visuals](docs/images/screenshot_analytics.png)
+
+### 3. AWS Console: Running EC2 Instance
+Screenshot of the EC2 service page on your AWS Console showing your instance is active and has the Elastic IP `100.58.176.84`:
+![3. AWS Console: Running EC2 Instance](docs/images/screenshot_aws_ec2.png)
+
+### 4. AWS Console: Available RDS Database
+Screenshot of the RDS service page on your AWS Console showing the `metaspace-mysql` database running:
+![4. AWS Console: Available RDS Database](docs/images/screenshot_aws_rds.png)
+
+### 5. AWS Console: Versioned S3 Backups Bucket
+Screenshot of the S3 service page on your AWS Console showing database backup SQL dumps inside the bucket `metaspace-assets-dev-2e2e14b2`:
+![5. AWS Console: Versioned S3 Backups Bucket](docs/images/screenshot_aws_s3.png)
+
+### 6. AWS Console: Active CloudWatch Alarms
+Screenshot of the CloudWatch Alarms page showing your metrics and alarm thresholds in the green `OK` status:
+![6. AWS Console: Active CloudWatch Alarms](docs/images/screenshot_aws_cloudwatch.png)
+
+### 7. GitHub Actions: Successful CI/CD Runs
+Screenshot of your repository Actions tab on GitHub showing a green checkmark next to the workflow run pipelines:
+![7. GitHub Actions: Successful CI/CD Runs](docs/images/screenshot_github_actions.png)
 
 ---
 *MetaSpace Digital Twin Operations Cloud - Case Study 145*
