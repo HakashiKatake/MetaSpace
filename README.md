@@ -486,31 +486,31 @@ To demonstrate active deployment and verification, save your screenshot images i
 
 ### 1. Dashboard Web Portal
 Screenshot of the main web application page showing the real-time Digital Twin KPIs and registry tables:
-![1. Dashboard Web Portal](docs/images/screenshot_dashboard.png)
+<img width="1470" height="698" alt="Screenshot 2026-06-14 at 2 18 35 PM" src="https://github.com/user-attachments/assets/c758651d-cdc4-4802-ab24-ccbfc1085f66" />
+
 
 ### 2. Analytics Telemetry Visuals
 Screenshot of the analytics page displaying the Chart.js metric trends:
-![2. Analytics Telemetry Visuals](docs/images/screenshot_analytics.png)
+<img width="1470" height="681" alt="Screenshot 2026-06-14 at 2 18 46 PM" src="https://github.com/user-attachments/assets/37285c06-d51b-41d9-890d-5a8f7ec74eb4" />
 
 ### 3. AWS Console: Running EC2 Instance
 Screenshot of the EC2 service page on your AWS Console showing your instance is active and has the Elastic IP `100.58.176.84`:
-![3. AWS Console: Running EC2 Instance](docs/images/screenshot_aws_ec2.png)
+<img width="1271" height="295" alt="Screenshot 2026-06-14 at 2 19 28 PM" src="https://github.com/user-attachments/assets/4d2a951d-e633-458e-b589-0b6396551928" />
 
 ### 4. AWS Console: Available RDS Database
 Screenshot of the RDS service page on your AWS Console showing the `metaspace-mysql` database running:
-![4. AWS Console: Available RDS Database](docs/images/screenshot_aws_rds.png)
+<img width="1470" height="487" alt="Screenshot 2026-06-14 at 2 21 19 PM" src="https://github.com/user-attachments/assets/a63c0601-8785-4b98-be33-25a724b6efae" />
 
 ### 5. AWS Console: Versioned S3 Backups Bucket
 Screenshot of the S3 service page on your AWS Console showing database backup SQL dumps inside the bucket `metaspace-assets-dev-2e2e14b2`:
-![5. AWS Console: Versioned S3 Backups Bucket](docs/images/screenshot_aws_s3.png)
+<img width="1450" height="580" alt="Screenshot 2026-06-14 at 2 22 09 PM" src="https://github.com/user-attachments/assets/1aeccc56-6e9e-4d65-b465-2a17031e0680" />
 
 ### 6. AWS Console: Active CloudWatch Alarms
 Screenshot of the CloudWatch Alarms page showing your metrics and alarm thresholds in the green `OK` status:
-![6. AWS Console: Active CloudWatch Alarms](docs/images/screenshot_aws_cloudwatch.png)
+<img width="1470" height="583" alt="Screenshot 2026-06-14 at 2 22 42 PM" src="https://github.com/user-attachments/assets/ab99455e-748e-48d4-96d8-728e03fc60e0" />
 
 ### 7. GitHub Actions: Successful CI/CD Runs
-Screenshot of your repository Actions tab on GitHub showing a green checkmark next to the workflow run pipelines:
-![7. GitHub Actions: Successful CI/CD Runs](docs/images/screenshot_github_actions.png)
+<img width="1470" height="632" alt="Screenshot 2026-06-14 at 2 23 10 PM" src="https://github.com/user-attachments/assets/d394db4c-f6a0-42d1-97ea-2d882c90419d" />
 
 ---
 *MetaSpace Digital Twin Operations Cloud - Case Study 145*
