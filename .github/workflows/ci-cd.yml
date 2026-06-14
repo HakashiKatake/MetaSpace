@@ -57,9 +57,11 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Configure SSH Key
+        env:
+          SSH_KEY: ${{ secrets.AWS_SSH_KEY }}
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.AWS_SSH_KEY }}" > ~/.ssh/metaspace-key
+          echo "$SSH_KEY" > ~/.ssh/metaspace-key
           chmod 600 ~/.ssh/metaspace-key
 
       - name: Package Codebase
