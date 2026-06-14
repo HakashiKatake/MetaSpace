@@ -62,6 +62,12 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           echo "$SSH_KEY" > ~/.ssh/metaspace-key
+          # Normalize carriage returns and newlines
+          sed -i 's/\r$//' ~/.ssh/metaspace-key
+          # Ensure there is a trailing newline at the end of the key file
+          if [ -n "$(tail -c1 ~/.ssh/metaspace-key)" ]; then
+            echo "" >> ~/.ssh/metaspace-key
+          fi
           chmod 600 ~/.ssh/metaspace-key
 
       - name: Package Codebase
