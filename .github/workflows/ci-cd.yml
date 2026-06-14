@@ -64,7 +64,7 @@ jobs:
 
       - name: Package Codebase
         run: |
-          tar -czf metaspace.tar.gz \
+          tar -czf /tmp/metaspace.tar.gz \
             --exclude='node_modules' \
             --exclude='.git' \
             --exclude='.terraform' \
@@ -76,7 +76,7 @@ jobs:
       - name: Upload Package to EC2
         run: |
           scp -i ~/.ssh/metaspace-key -o StrictHostKeyChecking=no \
-            metaspace.tar.gz ubuntu@${{ secrets.AWS_EC2_IP }}:/tmp/
+            /tmp/metaspace.tar.gz ubuntu@${{ secrets.AWS_EC2_IP }}:/tmp/
 
       - name: Extract and Run Deploy Script
         run: |
@@ -93,3 +93,4 @@ jobs:
         if: always()
         run: |
           rm -f ~/.ssh/metaspace-key
+          rm -f /tmp/metaspace.tar.gz
