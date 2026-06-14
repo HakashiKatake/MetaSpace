@@ -1,0 +1,95 @@
+name: MetaSpace CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  # ─── Continuous Integration (CI) ─────────────────
+  ci:
+    name: Build and Validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: 'npm'
+          cache-dependency-path: |
+            backend/package-lock.json
+            frontend/package-lock.json
+
+      # Validate Backend
+      - name: Install Backend Dependencies
+        run: |
+          cd backend
+          npm ci
+
+      # Validate Frontend
+      - name: Install Frontend Dependencies
+        run: |
+          cd frontend
+          npm ci
+
+      - name: Run Frontend Linting
+        run: |
+          cd frontend
+          npm run lint
+
+      - name: Build Frontend Application
+        run: |
+          cd frontend
+          npm run build
+
+  # ─── Continuous Deployment (CD) ──────────────────
+  cd:
+    name: Deploy to Production
+    needs: ci
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Configure SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.AWS_SSH_KEY }}" > ~/.ssh/metaspace-key
+          chmod 600 ~/.ssh/metaspace-key
+
+      - name: Package Codebase
+        run: |
+          tar -czf metaspace.tar.gz \
+            --exclude='node_modules' \
+            --exclude='.git' \
+            --exclude='.terraform' \
+            --exclude='terraform.tfstate*' \
+            --exclude='*.tar.gz' \
+            --exclude='frontend/dist' \
+            .
+
+      - name: Upload Package to EC2
+        run: |
+          scp -i ~/.ssh/metaspace-key -o StrictHostKeyChecking=no \
+            metaspace.tar.gz ubuntu@${{ secrets.AWS_EC2_IP }}:/tmp/
+
+      - name: Extract and Run Deploy Script
+        run: |
+          ssh -i ~/.ssh/metaspace-key -o StrictHostKeyChecking=no \
+            ubuntu@${{ secrets.AWS_EC2_IP }} "
+              sudo mkdir -p /opt/metaspace
+              sudo tar -xzf /tmp/metaspace.tar.gz -C /opt/metaspace
+              sudo chown -R ubuntu:ubuntu /opt/metaspace
+              cd /opt/metaspace
+              bash scripts/deploy.sh
+            "
+
+      - name: Clean Up SSH Key
+        if: always()
+        run: |
+          rm -f ~/.ssh/metaspace-key

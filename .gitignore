@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+/jspm_packages/
+.npm
+.eslintcache
+
+# Production Builds
+/frontend/dist/
+/backend/dist/
+
+# Local Environment Variables and Secrets
+.env
+.env.production
+.env.local
+.env.*.local
+*.pem
+*.key
+metaspace-key*
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Local Binaries and Downloads
+/bin/
+
+# Temporary Files and Tarballs
+*.tar.gz
+*.zip
+*.log
+/var/log/
+
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

@@ -1,0 +1,70 @@
+version: '3.9'
+
+services:
+  # ─── MySQL Database ───────────────────────
+  mysql:
+    image: mysql:8.0
+    container_name: metaspace-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root_dev_password
+      MYSQL_DATABASE:      metaspace_db
+      MYSQL_USER:          metaspace_user
+      MYSQL_PASSWORD:      dev_password_123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot_dev_password"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - metaspace-net
+
+  # ─── Node.js Backend ──────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: metaspace-backend
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env.development
+    environment:
+      NODE_ENV: development
+    ports:
+      - "5001:5000"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      mysql:
+        condition: service_healthy
+    command: ["npx", "nodemon", "server.js"]
+    networks:
+      - metaspace-net
+
+  # ─── React Frontend ───────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: metaspace-frontend
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    networks:
+      - metaspace-net
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  metaspace-net:
+    driver: bridge
