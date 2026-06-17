@@ -44,61 +44,6 @@ The project is designed with a secure multi-subnet network architecture that iso
 2. The Nginx reverse proxy routes all backend API calls (requests matching `/api/*`) to the Node.js Express server running on port 5000.
 3. The Express backend connects to the RDS MySQL database in the private subnet using the Sequelize Object Relational Mapping (ORM) framework to fetch or store data.
 
-### Text-Based Architecture Diagram
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                    AWS Cloud (us-east-1)                            │
-│                                                                     │
-│  ┌─────────────────────────── VPC: 10.0.0.0/16 ─────────────────┐  │
-│  │                                                               │  │
-│  │  ┌───────────────────────────────────────────────────────┐   │  │
-│  │  │           PUBLIC SUBNET (10.0.1.0/24)                 │   │  │
-│  │  │                                                       │   │  │
-│  │  │   ┌─────────────────────────────────────────────┐    │   │  │
-│  │  │   │         EC2 Instance (t3.micro)             │    │   │  │
-│  │  │   │                                             │    │   │  │
-│  │  │   │  [Docker Compose]                           │    │   │  │
-│  │  │   │  ├─ Nginx container  :80/:443               │    │   │  │
-│  │  │   │  │   ├─ Serves React SPA static files       │    │   │  │
-│  │  │   │  │   └─ Proxies /api to backend:5000        │    │   │  │
-│  │  │   │  └─ Node.js container :5000                 │    │   │  │
-│  │  │   │      └─ Express API and Sequelize ORM       │    │   │  │
-│  │  │   │                                             │    │   │  │
-│  │  │   │  [CloudWatch Agent] (Sends metrics/logs)     │    │   │  │
-│  │  │   │  [IAM Instance Role] (Grants S3/CW access)  │    │   │  │
-│  │  │   └─────────────────────────────────────────────┘    │   │  │
-│  │  └───────────────────────────────────────────────────────┘   │  │
-│  │                              │                                │  │
-│  │                 [Security Group: Port 3306]                   │  │
-│  │                              ▼                                │  │
-│  │  ┌───────────────────────────────────────────────────────┐   │  │
-│  │  │     PRIVATE SUBNETS (10.0.3.0/24 + 10.0.4.0/24)       │   │  │
-│  │  │                                                       │   │  │
-│  │  │   ┌─────────────────────────────────────────────┐    │   │  │
-│  │  │   │     RDS MySQL 8.0 Database (db.t3.micro)    │    │   │  │
-│  │  │   │     - Isolated from direct public web access  │    │   │  │
-│  │  │   │     - Automatic storage scaling and backup    │    │   │  │
-│  │  │   └─────────────────────────────────────────────┘    │   │  │
-│  │  └───────────────────────────────────────────────────────┘   │  │
-│  │                                                               │  │
-│  └───────────────────────────────────────────────────────────────┘  │
-│                                                                     │
-│  ┌─────────────┐   ┌────────────────┐   ┌────────────────────────┐  │
-│  │  S3 Bucket  │   │   CloudWatch   │   │   IAM Role             │  │
-│  │  - Backups  │   │  - Alarms      │   │  - EC2 instance rights │  │
-│  │  - Assets   │   │  - Dashboards  │   │  - CloudWatch writing  │  │
-│  │  - Log files│   │  - Metric logs │   │  - S3 backups writing  │  │
-│  └─────────────┘   └────────────────┘   └────────────────────────┘  │
-│                                                                     │
-└─────────────────────────────────────────────────────────────────────┘
-         ▲
-         │ (Internet Gateway)
-         │
-     [Internet]
-         │
-    [User Browser]
-```
-
 ### Mermaid Architecture Diagram
 ```mermaid
 graph TD
